@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { IoIosAdd } from "react-icons/io";
 function CreateArea({ onAdd }) {
   const [isExpanded, setExpanded] = useState(false);
 
@@ -52,7 +53,9 @@ function CreateArea({ onAdd }) {
             rows={isExpanded ? 3 : 1}
           ></textarea>
         </p>
-        <button onClick={submitButton}>Add</button>
+        <button onClick={submitButton}>
+          <IoIosAdd size={35} />
+        </button>
       </form>
     </div>
   );

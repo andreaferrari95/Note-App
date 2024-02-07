@@ -8,7 +8,9 @@ import Footer from "./components/Footer";
 import "./styles/App.css";
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(
+    () => JSON.parse(localStorage.getItem("notes")) || []
+  );
 
   function addNote(newNote) {
     setNotes((prevNote) => {
