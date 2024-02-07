@@ -1,6 +1,12 @@
 import React from "react";
 import ReactMde from "react-mde";
 import Showdown from "showdown";
+import PropTypes from "prop-types";
+
+Editor.propTypes = {
+  currentNote: PropTypes.string.isRequired,
+  updateNote: PropTypes.func.isRequired,
+};
 
 export default function Editor({ currentNote, updateNote }) {
   const [selectedTab, setSelectedTab] = React.useState("write");

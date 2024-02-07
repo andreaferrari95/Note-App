@@ -1,5 +1,16 @@
+import PropTypes from "prop-types";
+
+Sidebar.propTypes = {
+  currentNote: PropTypes.string.isRequired,
+  updateNote: PropTypes.func.isRequired,
+  notes: PropTypes.array.isRequired,
+  setCurrentNoteId: PropTypes.func.isRequired,
+  deleteNote: PropTypes.func.isRequired,
+  newNote: PropTypes.func.isRequired,
+};
+
 export default function Sidebar(props) {
-  const noteElements = props.notes.map((note, index) => (
+  const noteElements = props.notes.map((note /*index*/) => (
     <div key={note.id}>
       <div
         className={`title ${
