@@ -1,4 +1,4 @@
-/*// Import the functions you need from the SDKs you need
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
@@ -22,4 +22,3 @@ const app = initializeApp(firebaseConfig);
 const dataBase = getFirestore(app);
 const notesCollection = dataBase.collection("notes");
 //const analytics = getAnalytics(app);
-*/

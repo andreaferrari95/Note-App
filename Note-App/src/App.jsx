@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
@@ -11,6 +12,10 @@ function App() {
   const [notes, setNotes] = useState(
     () => JSON.parse(localStorage.getItem("notes")) || []
   );
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   function addNote(newNote) {
     setNotes((prevNote) => {
