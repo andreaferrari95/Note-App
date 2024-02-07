@@ -1,10 +1,20 @@
-function Note(props) {
+import PropTypes from "prop-types";
+
+function Note({ title, content, onDelete, id }) {
   return (
     <div className="note">
-      <h2>My note</h2>
-      <p>Hey what is going on</p>
+      <h1>{title}</h1>
+      <p>{content}</p>
+      <button onClick={() => onDelete(id)}>Delete</button>
     </div>
   );
 }
+
+Note.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+};
 
 export default Note;

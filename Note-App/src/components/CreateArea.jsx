@@ -1,41 +1,55 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
+function CreateArea({ onAdd }) {
+  const [isExpanded, setExpanded] = useState(false);
 
-function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
     content: "",
   });
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setNote((prevNote) => {
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setNote((preValue) => {
       return {
-        ...prevNote,
+        ...preValue,
         [name]: value,
       };
     });
   }
+  function handleExpanded() {
+    setExpanded(true);
+  }
 
   function submitButton(event) {
+    onAdd(note);
+    setNote({
+      title: "",
+      content: "",
+    });
     event.preventDefault();
   }
 
   return (
     <div>
       <form>
-        <input
-          type="text"
-          placeholder="Title"
-          name="title"
-          id="title"
-          value={note.title}
-          onChange={handleChange}
-        />
+        {isExpanded && (
+          <input
+            value={note.title}
+            type="text"
+            placeholder="Title"
+            name="title"
+            onChange={handleChange}
+          />
+        )}
         <p>
           <textarea
+            value={note.content}
+            onClick={handleExpanded}
             name="content"
-            id="content"
             placeholder="Take a note..."
+            onChange={handleChange}
+            rows={isExpanded ? 3 : 1}
           ></textarea>
         </p>
         <button onClick={submitButton}>Add</button>
@@ -43,5 +57,9 @@ function CreateArea(props) {
     </div>
   );
 }
+
+CreateArea.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+};
 
 export default CreateArea;
