@@ -1,49 +1,53 @@
 import { useState } from "react";
 import { useEffect } from "react";
-
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
 import Note from "./components/Note";
 import Count from "./components/Count";
 import Footer from "./components/Footer";
 import "./styles/App.css";
+import { onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
+import { notesCollection, dataBase } from "../firebase";
 
 function App() {
-  const [notes, setNotes] = useState(
-    () => JSON.parse(localStorage.getItem("notes")) || []
-  );
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+    const unsubscribe = onSnapshot(notesCollection, function (snapshot) {
+      const notesArray = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setNotes(notesArray);
+    });
 
-  function addNote(newNote) {
+    return unsubscribe;
+  }, []);
+
+  async function addNote(newNote) {
     setNotes((prevNote) => {
       return [...prevNote, newNote];
     });
+
+    addDoc(notesCollection, newNote);
   }
 
-  function deleteNotes(id) {
-    setNotes((prevNote) => {
-      return [...prevNote.filter((note, index) => index !== id)];
-    });
+  async function deleteNotes(id) {
+    const docRef = doc(dataBase, "notes", id);
+    await deleteDoc(docRef);
   }
 
   return (
     <div className="App">
       <Header />
       <Count
-        count={
-          notes.length === 0
-            ? "There are no notes"
-            : "You have " + notes.length + " Notes"
-        }
+        count={notes.length >= 0 ? "You have " + notes.length + " Notes" : ""}
       />
       <CreateArea onAdd={addNote} />
       {notes.map((note, index) => (
         <Note
           key={index}
-          id={index}
+          id={note.id}
           title={note.title}
           content={note.content}
           onDelete={deleteNotes}

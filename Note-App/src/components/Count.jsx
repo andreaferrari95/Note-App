@@ -9,7 +9,7 @@ function Count({ count }) {
 }
 
 Count.propTypes = {
-  count: PropTypes.number.isRequired,
+  count: PropTypes.string,
 };
 
 export default Count;
