@@ -7,6 +7,7 @@ function CreateArea({ onAdd }) {
   const [note, setNote] = useState({
     title: "",
     content: "",
+    createdAt: Date.now(),
   });
 
   function handleChange(e) {
